@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title> Campus Directions </title>
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+	<div class="header">
+		<div> </div>
+		<div class="home-btn" onclick="window.location.href='index.html'">
+			<img src="resources/home.png" class="home-image">
+		</div>
+	</div>
+	
+ <div class="logo-wrapper">
+    <a href="index.html"><img src="resources/SciWayLogo.png" alt="Logo" class="logo-image"></a>
+ </div>
+<div id="controls">
+	<label>
+		Start:
+		<select id="start">
+			<option value=""> Select your current location </option>
+		</select>
+	</label>
+	
+	<label>
+		Destination:
+		<select id="end">
+			<option value="">Select your destination</option>
+		</select>
+	</label>
+	
+	<button onclick="calculateRoute()" id="route-btn">Get Directions</button>
+</div>
+
+<div id="map-container">
+	<img src="maps/GENERAL_MAP_FINAL.png" id="map-image">
+	<svg id="route-layer"></svg>
+</div>
+
+<script src="Scripts/nodes.js"></script>
+<script src="Scripts/edges.js"></script>
+<script src="Scripts/routing.js"></script>
+<script src="Scripts/main.js"></script>
+	
+</body>
+</html>

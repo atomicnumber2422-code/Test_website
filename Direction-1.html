@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Campus Direction Guide</title>
+  <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+
+<h2>Campus Direction Guide</h2>
+
+<div class="controls">
+  <label>
+    Start:
+    <select id="start"></select>
+  </label>
+
+  <label>
+    Destination:
+    <select id="end"></select>
+  </label>
+
+  <button onclick="calculateRoute()">Get Directions</button>
+</div>
+
+<div id="map-container">
+  <img id="map-image" src="maps/GENERAL_MAP_FINAL.png" alt="Map">
+  <svg id="route-layer"></svg>
+</div>
+
+<!-- Data -->
+<script src="Scripts/nodes.js"></script>
+<script src="Scripts/edges.js"></script>
+
+<!-- Logic -->
+<script src="Scripts/route.js"></script>
+<script src="Scripts/main.js"></script>
+
+</body>
+</html>

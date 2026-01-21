@@ -3,21 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <title>Campus Direction Guide</title>
-  <link rel="stylesheet" href="style2.css">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
 
-<h2>Campus Direction Guide</h2>
+<div class="header">
+	<div>
+		<button class="direction-btn" onclick="window.location.href='Direction-1.html'"> Get Directions </button>
+	</div>
+	
+	<div class="home-btn" onclick="window.location.href='index.html'">
+		<img src="resources/home.png" alt="Home" class="home-image">
+	</div>
+</div>
+
+ 
+ <div>
+    <a href="index.html"><img src="resources/SciWayLogo.png" alt="Logo" class="logo-image"></a>
+ </div>
+ 
+<body>
 
 <div class="controls">
   <label>
     Start:
-    <select id="start"></select>
+    <select id="start"><option value="" disabled selected>Select your starting position</option></select>
   </label>
 
   <label>
     Destination:
-    <select id="end"></select>
+    <select id="end"><option value="" disabled selected>Select your destination</option></select>
   </label>
 
   <button onclick="calculateRoute()">Get Directions</button>

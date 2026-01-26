@@ -253,12 +253,12 @@ body {
 }
 
 .controls select option {
-    background-color: #800000; /* dark red to match your gradient */
+    background-color: #800000; 
     font-family: 'Poppins', sans-serif;
 	font-size: 14px;
 	font-weight: 400;
-	color: white;              /* keep text white */
-    padding: 10px;             /* optional, for spacing */
+	color: white;              
+    padding: 10px;             
 }
 
 
@@ -335,3 +335,4 @@ a {
 		max-width: 100%;
 	}
 }
+

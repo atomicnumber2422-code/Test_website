@@ -258,7 +258,7 @@ body {
 	font-size: 14px;
 	font-weight: 400;
 	color: white;              
-    padding: 10px;             
+    /*padding: 10px;*/            
 }
 
 
@@ -335,4 +335,5 @@ a {
 		max-width: 100%;
 	}
 }
+
 

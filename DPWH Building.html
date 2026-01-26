@@ -32,12 +32,18 @@
     <select id="end"><option value="" disabled selected>Select your destination</option></select>
   </label>
 
-  <button onclick="calculateRoute()">Get Directions</button>
+  <button id="route-btn">Get Directions</button>
 </div>
 
 <div id="map-container">
-  <img id="map-image" src="maps\DPWH_FINALBLDG.png" alt="DPWH Building">
-  <svg id="route-layer"></svg>
+	<div id="map-inner">
+		<img id="map-image" src="maps\DWPH_FINALBLDG_1.png" alt="DPWH Building">
+		<svg id="route-layer"></svg>
+	</div>
+</div>
+
+<div class="replay">
+	<button id="replay-btn" style="display:none;"> Replay Route</button>
 </div>
 	
 	
@@ -51,7 +57,7 @@
 <script src="data/nodes_DPWH.js"></script>
 <script src="data/edges_DPWH.js"></script>
 <script src="Scripts/route.js"></script>
-<script src="Scripts/main.js"></script>
+<script src="Scripts/main_bldg.js"></script>
 
 
 </body>

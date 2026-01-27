@@ -19,7 +19,7 @@
 
 <div class="logo-wrapper">
     <a href="index.html"><img src="resources\SciWayLogo.png" alt="Logo" class="logo-image"></a>
- </div>
+</div>
 
 <div class="controls">
   <label>
@@ -32,18 +32,24 @@
     <select id="end"><option value="" disabled selected>Select your destination</option></select>
   </label>
 
-  <button onclick="calculateRoute()">Get Directions</button>
+  <button id="route-btn">Get Directions</button>
 </div>
 
 <div id="map-container">
-  <img id="map-image" src="maps\FAJARDO_FINALBLDG.png" alt="Fajardo Building">
-  <svg id="route-layer"></svg>
+	<div id="map-inner">
+		<img id="map-image" src="maps\FAJARDO_FINALBLDG_1.png" alt="SHS Building">
+		<svg id="route-layer"></svg>
+	</div>
+</div>
+
+<div class="replay">
+	<button id="replay-btn" style="display:none;"> Replay Route</button>
 </div>
 	
 	
 	<div class="container-btn">
-		<button class="nav-btn" onclick="window.location.href='Perez Builiding.html'"> Perez Building </button>
 		<button class="nav-btn" onclick="window.location.href='DPWH Building.html'"> DPWH Building </button>
+		<button class="nav-btn" onclick="window.location.href='Perez Builiding.html'"> Perez Building </button>
 		<button class="nav-btn" onclick="window.location.href='Security Bank Building.html'"> Security Bank Building </button>
 		<button class="nav-btn" onclick="window.location.href='Senior High School (SHS) Builiding.html'"> Senior High School Building </button>
 	</div>
@@ -51,13 +57,8 @@
 <script src="data/nodes_Fajardo.js"></script>
 <script src="data/edges_Fajardo.js"></script>
 <script src="Scripts/route.js"></script>
-<script src="Scripts/main.js"></script>
+<script src="Scripts/main_bldg.js"></script>
 
-	
+
 </body>
 </html>
-
-		
-
-
-

@@ -277,7 +277,7 @@ const nodes = [
 		{
 			id:"path3_5",
 			map:"SHS_FINALBLDG_3.png",
-			x: 83.6,
+			x: 3.4,
 			y: 83.6,
 			type:"path",
 			floor: 2,
@@ -424,4 +424,5 @@ const nodes = [
 
 
 		
+
 			

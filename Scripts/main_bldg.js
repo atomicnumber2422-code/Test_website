@@ -118,11 +118,14 @@ function getTouchCenter(touches) {
 
 document.addEventListener("DOMContentLoaded", () => {
 	// Populate start/end selects (only selectable nodes)
-	nodes.filter(n => n.selectable).forEach(node => {
-		startSelect.add(new Option(node.name, node.id));
-		endSelect.add(new Option(node.name, node.id));
+	const selectableNodes = nodes
+	.filter(n => n.selectable)
+	.sort((a, b) => a.name.localeCompare(b.name));
+	
+	selectableNodes.forEach(node => {
+	startSelect.add(new Option(node.name, node.id));
+	endSelect.add(new Option(node.name, node.id));
 	});
-
 	// Prevent choosing the same start/end
 	function preventSameSelection() {
 		if (startSelect.value && startSelect.value === endSelect.value) {
@@ -212,65 +215,86 @@ function calculateRoute() {
 // Multifloor rendering
 function renderRouteMultiFloor(path) {
 	let index = 0;
-	let t = 0;
-	const speed = 0.08;
-	let startNode = getNode(path[0]);
-	let currentFloor = startNode.floor;
-	
-	mapImage.src = MAP_FOLDER + startNode.map;
-	drawPin(startNode, "start");
-	
-	function nextSegment() {
-		if (index >= path.length - 1) {
-			drawPin(getNode(path[path.length - 1]), "end"); // end pin on top
-			return;
-		}
+    let t = 0;
+    const speed = 0.08;
 
-		const a = getNode(path[index]);
-		const b = getNode(path[index + 1]);
+    const startNode = getNode(path[0]);
 
-		if (a.floor !== currentFloor) {
-			currentFloor = a.floor;
-			mapImage.src = MAP_FOLDER + a.map;
-			
-			svg.querySelectorAll("line").forEach(l => l.remove());
-			
-			svg.querySelectorAll(".pin").forEach(p => p.remove());
-			
-		}
+    mapImage.src = MAP_FOLDER + startNode.map;
+    clearRoute();
+    drawPin(startNode, "start");
 
+    function nextSegment() {
 
-		const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-		line.setAttribute("x1", a.x);
-		line.setAttribute("y1", a.y);
-		line.setAttribute("x2", a.x);
-		line.setAttribute("y2", a.y);
-		line.setAttribute("stroke", "#000");
-		line.setAttribute("stroke-width", 0.8);
-		line.setAttribute("stroke-linecap", "round");
-		svg.appendChild(line);
+        // ✅ Finished route
+        if (index >= path.length - 1) {
 
-		t = 0;
-		function animate() {
-			t += speed;
-			if (t > 1) t = 1;
+            const finalNode = getNode(path[path.length - 1]);
 
-			line.setAttribute("x2", a.x + (b.x - a.x) * t);
-			line.setAttribute("y2", a.y + (b.y - a.y) * t);
+            if (finalNode.type !== "stair") {
+                drawPin(finalNode, "end");
+            }
 
-			if (t < 1) {
-				requestAnimationFrame(animate); 
-			} else {
-				bringPinsToFront();
-				index++;
-				nextSegment();
-			}
-		}
+            return;
+        }
 
-		animate();
-	}
-	
-	
-	nextSegment();
+        const a = getNode(path[index]);
+        const b = getNode(path[index + 1]);
+
+        // 🚨 FLOOR CHANGE
+        if (a.floor !== b.floor) {
+
+            setTimeout(() => {
+
+                // ✅ Switch map
+                mapImage.src = MAP_FOLDER + b.map;
+
+                // ✅ Clear previous floor drawing
+                clearRoute();
+
+                // 🚫 DO NOT draw stair pin
+                // 🚫 DO NOT draw connecting line
+
+                index++; // move to next node
+                nextSegment();
+
+            }, 600);
+
+            return;
+        }
+
+        // ✅ Normal same-floor animation
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", a.x);
+        line.setAttribute("y1", a.y);
+        line.setAttribute("x2", a.x);
+        line.setAttribute("y2", a.y);
+        line.setAttribute("stroke", "#000");
+        line.setAttribute("stroke-width", 0.8);
+        line.setAttribute("stroke-linecap", "round");
+
+        svg.appendChild(line);
+
+        t = 0;
+
+        function animate() {
+            t += speed;
+            if (t > 1) t = 1;
+
+            line.setAttribute("x2", a.x + (b.x - a.x) * t);
+            line.setAttribute("y2", a.y + (b.y - a.y) * t);
+
+            if (t < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                index++;
+                nextSegment();
+            }
+        }
+
+        animate();
+    }
+
+    nextSegment();
 }
 

@@ -195,7 +195,7 @@ const nodes = [
 	{
 			id:"path2_1",
 			map:"FAJARDO_FINALBLDG_2.png",
-			x: 46.84,
+			x: 6.84,
 			y: 89.09,
 			type:"path",
 			floor: 1,

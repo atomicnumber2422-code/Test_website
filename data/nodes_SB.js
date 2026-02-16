@@ -14,7 +14,7 @@ const nodes = [
 			id:"CompLab",
 			name:"Computer Lab",
 			map:"SB_FINALBLDG_1.png",
-			x: 37,4,
+			x: 37.4,
 			y: 71.28,
 			type:"room",
 			floor: 0,
@@ -116,7 +116,7 @@ const nodes = [
 	{
 			id:"stair1_1",
 			map:"SB_FINALBLDG_1.png",
-			x: 7.29,
+			x: 7.79,
 			y: 76.56,
 			type:"stair",
 			floor: 0,
@@ -154,7 +154,7 @@ const nodes = [
 	},
 	{
 			id:"Mayer",
-			name:"12-Mayer",
+			name:"12-Von Mayer",
 			map:"SB_FINALBLDG_2.png",
 			x: 57.84,
 			y: 71.17,
@@ -178,7 +178,7 @@ const nodes = [
 			x: 7.29,
 			y: 27.49,
 			type:"path",
-			floor: 0,
+			floor: 1,
 			selectable: false
 	},
 	{
@@ -227,7 +227,7 @@ const nodes = [
 			selectable: false
 	},
 	{
-			id:"stair2_1",
+			id:"stair2_2",
 			map:"SB_FINALBLDG_2.png",
 			x: 92.29,
 			y: 79.58,
@@ -236,7 +236,7 @@ const nodes = [
 			selectable: false
 	},
 	{
-			id:"stair2_2",
+			id:"stair2_1",
 			map:"SB_FINALBLDG_2.png",
 			x: 7.29,
 			y: 79.58,

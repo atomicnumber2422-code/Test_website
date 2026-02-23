@@ -3,31 +3,38 @@ const SVG_VIEWBOX = "0 0 100 100";
 
 const startSelect = document.getElementById("start");
 const endSelect = document.getElementById("end");
-const mapImage = document.getElementById("map-image");
-const svg = document.getElementById("route-layer");
 const routeBtn = document.getElementById("route-btn");
 
 const mapContainer = document.getElementById("map-container");
 const mapInner = document.getElementById("map-inner");
+const mapImage = document.getElementById("map-image");
+const svg = document.getElementById("route-layer");
 
+const replayBtn = document.getElementById("replay-btn");
+
+let lastPath = null;
+
+replayBtn.addEventListener("click", () => {
+	if (!lastPath) return;
+	
+	clearRoute();
+	renderRouteMultiFloor(lastPath);
+});
+
+// Prevent image dragging
 mapImage.addEventListener("dragstart", e => e.preventDefault());
 mapContainer.style.cursor = "grab";
 
 
-let scale = 1;
-let translateX = 0;
-let translateY = 0;
-let isPanning = false;
-let startX = 0;
-let startY = 0;
+let scale = 1, translateX = 0, translateY = 0;
+let isPanning = false, startX = 0, startY = 0;
+let lastTouchDistance = null, lastTouchCenter = null;
 
-// Transform (zoom/pan)
 function updateTransform() {
-	mapInner.style.transform =
-		`translate(${translateX}px, ${translateY}px) scale(${scale})`;
+	mapInner.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
 }
 
-// Zoom
+
 mapContainer.addEventListener("wheel", e => {
 	e.preventDefault();
 	const zoomSpeed = 0.0015;
@@ -36,7 +43,7 @@ mapContainer.addEventListener("wheel", e => {
 	updateTransform();
 }, { passive: false });
 
-// Pan
+
 mapContainer.addEventListener("mousedown", e => {
 	isPanning = true;
 	startX = e.clientX - translateX;
@@ -49,156 +56,221 @@ window.addEventListener("mousemove", e => {
 	translateY = e.clientY - startY;
 	updateTransform();
 });
-window.addEventListener("mouseup", () => { 
+window.addEventListener("mouseup", () => {
 	isPanning = false;
 	mapContainer.style.cursor = "grab";
 });
 
+// Touch pan & pinch zoom
 mapContainer.addEventListener("touchstart", e => {
-	if (e.touches.length !== 1) return;
-	isPanning = true;
-	startX = e.touches[0].clientX - translateX;
-	startY = e.touches[0].clientY - translateY;
-	mapContainer.style.cursor = "grabbing";
-});
-mapContainer.addEventListener("touchmove", e => {
-	if (!isPanning) return;
-	translateX = e.touches[0].clientX - startX;
-	translateY = e.touches[0].clientY - startY;
-	updateTransform();
+	if (e.touches.length === 1) {
+		isPanning = true;
+		startX = e.touches[0].clientX - translateX;
+		startY = e.touches[0].clientY - translateY;
+	}
+	if (e.touches.length === 2) {
+		lastTouchDistance = getTouchDistance(e.touches);
+		lastTouchCenter = getTouchCenter(e.touches);
+	}
 }, { passive: false });
-mapContainer.addEventListener("touchend", () => { 
-	isPanning = false; 
-	mapContainer.style.cursor = "grab";
+
+mapContainer.addEventListener("touchmove", e => {
+	e.preventDefault();
+	if (e.touches.length === 1 && isPanning) {
+		translateX = e.touches[0].clientX - startX;
+		translateY = e.touches[0].clientY - startY;
+		updateTransform();
+	}
+	if (e.touches.length === 2) {
+		const newDistance = getTouchDistance(e.touches);
+		const center = getTouchCenter(e.touches);
+		if (lastTouchDistance) {
+			const zoomFactor = newDistance / lastTouchDistance;
+			scale = Math.min(Math.max(scale * zoomFactor, 0.6), 3);
+			translateX += center.x - lastTouchCenter.x;
+			translateY += center.y - lastTouchCenter.y;
+		}
+		lastTouchDistance = newDistance;
+		lastTouchCenter = center;
+		updateTransform();
+	}
+}, { passive: false });
+
+mapContainer.addEventListener("touchend", () => {
+	isPanning = false;
+	lastTouchDistance = null;
+	lastTouchCenter = null;
 });
 
-// Populate selects
-nodes.filter(n => n.type === "poi").forEach(node => {
-	startSelect.add(new Option(node.name, node.id));
-	endSelect.add(new Option(node.name, node.id));
-});
-startSelect.addEventListener("change", handleSameSelection);
-endSelect.addEventListener("change", handleSameSelection);
+function getTouchDistance(touches) {
+	const dx = touches[0].clientX - touches[1].clientX;
+	const dy = touches[0].clientY - touches[1].clientY;
+	return Math.hypot(dx, dy);
+}
 
-// SVG setup
+function getTouchCenter(touches) {
+	return {
+		x: (touches[0].clientX + touches[1].clientX) / 2,
+		y: (touches[0].clientY + touches[1].clientY) / 2
+	};
+}
+
+
+document.addEventListener("DOMContentLoaded", () => {
+	// Populate start/end selects (only selectable nodes)
+	nodes.filter(n => n.selectable).forEach(node => {
+		startSelect.add(new Option(node.name, node.id));
+		endSelect.add(new Option(node.name, node.id));
+	});
+
+	// Prevent choosing the same start/end
+	function preventSameSelection() {
+		if (startSelect.value && startSelect.value === endSelect.value) {
+			alert("Starting point and destination must be different.");
+			this.selectedIndex = 0;
+		}
+	}
+	startSelect.addEventListener("change", preventSameSelection);
+	endSelect.addEventListener("change", preventSameSelection);
+
+	// Route button
+	if (routeBtn) {
+		routeBtn.addEventListener("click", () => {
+			const startId = startSelect.value;
+			const endId = endSelect.value;
+			if (!startId || !endId) {
+				alert("Please select both start and destination.");
+				return;
+			}
+			calculateRoute();
+		});
+	}
+});
+
+
 svg.setAttribute("viewBox", SVG_VIEWBOX);
 svg.setAttribute("preserveAspectRatio", "none");
 
-// Route button
-if (routeBtn) routeBtn.addEventListener("click", calculateRoute);
-
-// Prevent same start/end
-function handleSameSelection() {
-	const startId = startSelect.value;
-	const endId = endSelect.value;
-	if (!startId || !endId) return;
-	if (startId === endId) {
-		alert("Starting point and destination must be different.");
-		if (this === startSelect) startSelect.selectedIndex = 0;
-		else endSelect.selectedIndex = 0;
-	}
-}
-
-// Calculate route
-function calculateRoute() {
-	const startId = startSelect.value;
-	const endId = endSelect.value;
-	if (!startId || !endId) { alert("Please select both start and destination."); return; }
-	clearRoute();
-	const path = dijkstra(startId, endId);
-	if (!path || path.length < 2) { alert("No route found."); return; }
-	renderRouteSmooth(path);
-}
 
 function getNode(id) { return nodes.find(n => n.id === id); }
 function clearRoute() { svg.innerHTML = ""; }
+
+function bringPinsToFront() {
+	svg.querySelectorAll(".pin").forEach(pin => {
+		svg.appendChild(pin);
+	});
+}
+
+
 function drawPin(node, type) {
+	const color = type === "start" ? "#00cc00" : "#cc0000";
+	const PIN_SIZE = 1.3;
+
 	const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
 	circle.setAttribute("cx", node.x);
-	circle.setAttribute("cy", node.y - 1.5);
-	circle.setAttribute("r", "1.5");
-	circle.setAttribute("fill", type === "start" ? "#00cc00" : "#cc0000");
-	svg.appendChild(circle);
+	circle.setAttribute("cy", node.y - PIN_SIZE);
+	circle.setAttribute("r", PIN_SIZE);
+	circle.setAttribute("fill", color);
+	circle.classList.add("pin", type);
 
 	const triangle = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
 	triangle.setAttribute(
 		"points",
-		`${node.x-0.8},${node.y-0.2} ${node.x+0.8},${node.y-0.2} ${node.x},${node.y+1.2}`
+		`${node.x - PIN_SIZE * 0.8},${node.y - PIN_SIZE * 0.2} ` +
+		`${node.x + PIN_SIZE * 0.8},${node.y - PIN_SIZE * 0.2} ` +
+		`${node.x},${node.y + PIN_SIZE * 1.2}`
 	);
-	triangle.setAttribute("fill", type === "start" ? "#00cc00" : "#cc0000");
+	triangle.setAttribute("fill", color);
+	triangle.classList.add("pin", type);
+
+	svg.appendChild(circle);
 	svg.appendChild(triangle);
+
 }
 
-// Smooth path rendering
-function renderRouteSmooth(path) {
-	let currentMap = null;
 
-	const segments = [];
-	for (let i = 0; i < path.length - 1; i++) {
-		const a = getNode(path[i]);
-		const b = getNode(path[i+1]);
-		if (!a || !b) continue;
+//Route calculation
+function calculateRoute() {
+	const startId = startSelect.value;
+	const endId = endSelect.value;
 
-		if (a.map !== currentMap) {
-			currentMap = a.map;
-			mapImage.src = MAP_FOLDER + currentMap;
-			clearRoute();
-		}
+	clearRoute();
+	
+	const path = dijkstra(startId, endId);
 
-		if (a.map === b.map) segments.push({a,b});
+	if (!path || path.length < 2) {
+		alert("No route found.");
+		return;
 	}
+	
+	lastPath = path;
+	replayBtn.style.display = "inline-block";
 
-	if (segments.length === 0) return;
+	renderRouteMultiFloor(path);
+}
 
+// Multifloor rendering
+function renderRouteMultiFloor(path) {
+	let index = 0;
 	let t = 0;
-	let speed = 0.1; // adjust for slower/faster animation
-	let currentSegment = 0;
-	let startPinDrawn = false; // track start pin
-
-	function animate() {
-		if (currentSegment >= segments.length) {
-			// Draw end pin at the last node
-			drawPin(getNode(path[path.length - 1]), "end");
+	const speed = 0.05;
+	let startNode = getNode(path[0]);
+	let currentFloor = startNode.floor;
+	
+	mapImage.src = MAP_FOLDER + startNode.map;
+	drawPin(startNode, "start");
+	
+	function nextSegment() {
+		if (index >= path.length - 1) {
+			drawPin(getNode(path[path.length - 1]), "end"); // end pin on top
 			return;
 		}
 
-		const {a, b} = segments[currentSegment];
+		const a = getNode(path[index]);
+		const b = getNode(path[index + 1]);
+
+		if (a.floor !== currentFloor) {
+			currentFloor = a.floor;
+			mapImage.src = MAP_FOLDER + a.map;
+			
+			svg.querySelectorAll("line").forEach(l => l.remove());
+			
+			svg.querySelectorAll(".pin").forEach(p => p.remove());
+			
+		}
+
+
 		const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
 		line.setAttribute("x1", a.x);
 		line.setAttribute("y1", a.y);
 		line.setAttribute("x2", a.x);
 		line.setAttribute("y2", a.y);
-		line.setAttribute("stroke", "#000000");
-		line.setAttribute("stroke-width", "0.8");
+		line.setAttribute("stroke", "#000");
+		line.setAttribute("stroke-width", 0.8);
 		line.setAttribute("stroke-linecap", "round");
 		svg.appendChild(line);
 
-		function drawStep() {
+		t = 0;
+		function animate() {
 			t += speed;
 			if (t > 1) t = 1;
 
-			const newX = a.x + (b.x - a.x) * t;
-			const newY = a.y + (b.y - a.y) * t;
-			line.setAttribute("x2", newX);
-			line.setAttribute("y2", newY);
+			line.setAttribute("x2", a.x + (b.x - a.x) * t);
+			line.setAttribute("y2", a.y + (b.y - a.y) * t);
 
-			// Draw start pin after first segment has started
-			if (!startPinDrawn) {
-				drawPin(getNode(path[0]), "start");
-				startPinDrawn = true;
-			}
-
-			if (t < 1) requestAnimationFrame(drawStep);
-			else {
-				currentSegment++;
-				t = 0;
-				animate();
+			if (t < 1) {
+				requestAnimationFrame(animate); 
+			} else {
+				bringPinsToFront();
+				index++;
+				nextSegment();
 			}
 		}
-		drawStep();
+
+		animate();
 	}
-
-	animate();
+	
+	
+	nextSegment();
 }
-
 

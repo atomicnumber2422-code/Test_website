@@ -26,15 +26,20 @@
 <div class="controls">
   <label>
     Start:
-    <select id="start"><option value="" disabled selected>Select your starting position</option></select>
+    <select id="start">
+      <option value="" disabled selected>Select your starting position</option>
+    </select>
   </label>
 
   <label>
     Destination:
-    <select id="end"><option value="" disabled selected>Select your destination</option></select>
+    <select id="end">
+      <option value="" disabled selected>Select your destination</option>
+    </select>
   </label>
 
   <button onclick="calculateRoute()">Get Directions</button>
+  <button id="gps-btn" onclick="toggleGPS()">Enable Live GPS</button>
 </div>
 
 <div id="map-container">

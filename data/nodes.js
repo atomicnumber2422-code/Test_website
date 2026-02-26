@@ -8,6 +8,8 @@ const nodes = [
 		y: 87.65, 
 		type: "room",
 		floor: 0,
+		lat: 15.485663663595393,
+		lng: 120.97378648879813,
 		selectable : true
 	},
 	{
@@ -18,6 +20,8 @@ const nodes = [
 		y: 58.23, 
 		type: "room",
 		floor: 0,
+		lat: 15.485697827479608,
+		lng: 120.97400087515935,
 		selectable : true
 	},
 	{
@@ -28,6 +32,8 @@ const nodes = [
 		y: 76.26, 
 		type: "room",
 		floor: 0,
+		lat: 15.4852581,
+		lng: 120.9741891,
 		selectable : true
 	},
 	{
@@ -38,6 +44,8 @@ const nodes = [
 		y: 51.06, 
 		type: "room",
 		floor: 0,
+		lat: 15.485251,
+		lng: 120.9744447,
 		selectable : true
 	},
 	{
@@ -48,6 +56,8 @@ const nodes = [
 		y: 26.8, 
 		type: "room",
 		floor: 0,
+		lat: 15.4852822,
+		lng: 120.9745791,
 		selectable : true
 	},
 	{
@@ -58,6 +68,8 @@ const nodes = [
 		y: 26.8, 
 		type: "room",
 		floor: 0,
+		lat: 15.485658934, //approximation
+		lng: 120.9745208, //approximation
 		selectable : true
 	},
 	{
@@ -68,6 +80,8 @@ const nodes = [
 		y: 22.96, 
 		type: "room",
 		floor: 0,
+		lat: 15.48592006935619,
+		lng: 120.9741632155359,
 		selectable : true
 	},
 	{
@@ -78,6 +92,8 @@ const nodes = [
 		y: 22.96, 
 		type: "room",
 		floor: 0,
+		lat: 15.485794039347823,
+		lng: 120.97409816675302,
 		selectable : true
 	},
 	{
@@ -88,6 +104,8 @@ const nodes = [
 		y: 22.38, 
 		type: "room",
 		floor: 0,
+		lat: 15.485843764845821,
+		lng: 120.974357990566,
 		selectable : true
 	},
 	{
@@ -98,6 +116,8 @@ const nodes = [
 		y: 32.67, 
 		type: "room",
 		floor: 0,
+		lat: 15.485657993372714, //approximation
+		lng: 120.9741677,
 		selectable : true
 	},
 	{
@@ -108,6 +128,8 @@ const nodes = [
 		y: 50.99, 
 		type: "room",
 		floor: 0,
+		lat: 15.4854855,
+		lng: 120.9740674,
 		selectable : true
 	},
 	{
@@ -118,6 +140,8 @@ const nodes = [
 		y: 69.6, 
 		type: "room",
 		floor: 0,
+		lat: 15.4852843,
+		lng: 120.9741504,
 		selectable : true
 	},
 	{
@@ -128,6 +152,8 @@ const nodes = [
 		y: 69.6, 
 		type: "room",
 		floor: 0,
+		lat: 15.4852796,
+		lng: 120.9740735,
 		selectable : true
 	},
 	{
@@ -138,6 +164,8 @@ const nodes = [
 		y: 69.6, 
 		type: "room",
 		floor: 0,
+		lat: 15.4853718,
+		lng: 120.9741326,
 		selectable : true
 	},
 	{
@@ -148,6 +176,8 @@ const nodes = [
 		y: 21.3, 
 		type: "room",
 		floor: 0,
+		lat: 15.4852279,
+		lng: 120.974357990566,
 		selectable : true
 	},
 	{
@@ -158,6 +188,8 @@ const nodes = [
 		y: 21.3, 
 		type: "room",
 		floor: 0,
+		lat: 15.4852796,
+		lng: 120.974357990566,
 		selectable : true
 	},
 	{
@@ -168,6 +200,8 @@ const nodes = [
 		y: 45.89, 
 		type: "room",
 		floor: 0,
+		lat: 15.4851097,
+		lng: 120.9745799,
 		selectable : true
 	},
 	{
@@ -178,6 +212,8 @@ const nodes = [
 		y: 33.46, 
 		type: "room",
 		floor: 0,
+		lat: 15.4851503,
+		lng: 120.9746472,
 		selectable : true
 	},
 	{
@@ -188,6 +224,8 @@ const nodes = [
 		y: 31.36, 
 		type: "room",
 		floor: 0,
+		lat: 15.485886856938297,
+		lng: 120.97417931482487,
 		selectable : true
 	},
 	{
@@ -198,6 +236,8 @@ const nodes = [
 		y: 46.64, 
 		type: "room",
 		floor: 0,
+		lat: 15.4852555,
+		lng: 120.9745697,
 		selectable : true
 	},
 	{
@@ -208,6 +248,8 @@ const nodes = [
 		y: 44.04, 
 		type: "room",
 		floor: 0,
+		lat: 15.4852248,
+		lng: 120.9744448,
 		selectable : true
 	},
 	{
@@ -218,6 +260,8 @@ const nodes = [
 		y: 51.06, 
 		type: "room",
 		floor: 0,
+		lat: 15.485246,
+		lng: 120.9744507,
 		selectable : true
 	},
 	{
@@ -228,6 +272,8 @@ const nodes = [
 		y: 57.95, 
 		type: "room",
 		floor: 0,
+		lat: 15.4852042,
+		lng: 120.9743887,
 		selectable : true
 	},
 //Path
@@ -238,6 +284,8 @@ const nodes = [
 		y: 85.82, 
 		type: "path",
 		floor: 0,
+		lat: 15.485745591191634,
+		lng: 120.97397204991579,
 		selectable : false
 	},
 	{
@@ -247,6 +295,8 @@ const nodes = [
 		y: 85.82, 
 		type: "path",
 		floor: 0,
+		lat: 15.485837211698929,
+		lng: 120.97378577515175,
 		selectable : false
 	},
 	{
@@ -256,6 +306,8 @@ const nodes = [
 		y: 58.23, 
 		type: "path",
 		floor: 0,
+		lat: 15.485799846186127,
+		lng: 120.97374553022483,
 		selectable : false
 	},
 	{
@@ -265,6 +317,8 @@ const nodes = [
 		y: 50.99, 
 		type: "path",
 		floor: 0,
+		lat: 15.485724647843155,
+		lng: 120.9741529520232,
 		selectable : false
 	},
 	{
@@ -274,6 +328,8 @@ const nodes = [
 		y: 35.49, 
 		type: "path",
 		floor: 0,
+		lat: 15.485746266084586,
+		lng: 120.97410321672528,
 		selectable : false
 	},
 	{
@@ -283,6 +339,8 @@ const nodes = [
 		y: 27.89, 
 		type: "path",
 		floor: 0,
+		lat: 15.485743949609166,
+		lng: 120.974002120424,
 		selectable : false
 	},
 	{
@@ -292,6 +350,8 @@ const nodes = [
 		y: 27.89, 
 		type: "path",
 		floor: 0,
+		lat: 15.48580071919918,
+		lng: 120.97414722744664,
 		selectable : false
 	},
 	{
@@ -301,6 +361,8 @@ const nodes = [
 		y: 35.49, 
 		type: "path",
 		floor: 0,
+		lat: 15.48579406,
+		lng: 120.9740982,
 		selectable : false
 	},
 	{
@@ -310,6 +372,8 @@ const nodes = [
 		y: 35.49, 
 		type: "path",
 		floor: 0,
+		lat: 15.485657693372714,
+		lng: 120.97384197807398,
 		selectable : false
 	},
 	{
@@ -319,6 +383,8 @@ const nodes = [
 		y: 48.09, 
 		type: "path",
 		floor: 0,
+		lat: 15.4857416318953,
+		lng: 120.97417520542044,
 		selectable : false
 	},
 	{
@@ -328,6 +394,8 @@ const nodes = [
 		y: 48.09, 
 		type: "path",
 		floor: 0,
+		lat: 15.485800260280877,
+		lng: 120.97414534403568,
 		selectable : false
 	},
 	{
@@ -337,6 +405,8 @@ const nodes = [
 		y: 50.99, 
 		type: "path",
 		floor: 0,
+		lat: 15.485744557188058,
+		lng: 120.97413232596637,
 		selectable : false
 	},
 	{
@@ -346,13 +416,19 @@ const nodes = [
 		y: 76.26, 
 		type: "path",
 		floor: 0,
+		lat: 15.485738242476552,
+		lng: 120.97399305286557,
+		lat: 15.4857701,
+		lng: 120.9739799,
 		selectable : false
 	},
 	{
 		id: "path1_14", 
 		map: "GENERAL_MAP.png", 
 		x: 13.68, 
-		y: 27.89, 
+		y: 27.89,
+		lat: 15.48579528261723,
+		lng: 120.97409856706065,		
 		type: "path",
 		floor: 0,
 		selectable : false
@@ -364,6 +440,9 @@ const nodes = [
 		y: 27.89, 
 		type: "path",
 		floor: 0,
+		lat: 15.48576485475708,
+		lng: 120.97431480393013,
+		
 		selectable : false
 	},
 	{
@@ -373,6 +452,8 @@ const nodes = [
 		y: 27.89, 
 		type: "path",
 		floor: 0,
+		lat: 15.485700974254362,
+		lng: 120.9743641969943,
 		selectable : false
 	},
 	{
@@ -382,6 +463,8 @@ const nodes = [
 		y: 27.89, 
 		type: "path",
 		floor: 0,
+		lat: 15.485657993372714, //approximation
+		lng: 120.9743641969943,
 		selectable : false
 	},
 	{
@@ -391,6 +474,8 @@ const nodes = [
 		y: 26.8, 
 		type: "path",
 		floor: 0,
+		lat: 15.485657993372714, //approximation
+		lng: 120.9745208,
 		selectable : false
 	},
 	{
@@ -400,6 +485,8 @@ const nodes = [
 		y: 38.68, 
 		type: "path",
 		floor: 0,
+		lat: 15.485657993372714, //approximation
+		lng: 120.9743767,
 		selectable : false
 	},
 	{
@@ -409,6 +496,10 @@ const nodes = [
 		y: 76.26, 
 		type: "path",
 		floor: 0,
+		lat: 15.485667000950102,
+		lng: 120.97392299111097,
+		//lat: 15.4857722,
+		//lng: 120.9739828,
 		selectable : false
 	},
 	{
@@ -418,6 +509,8 @@ const nodes = [
 		y: 38.68, 
 		type: "path",
 		floor: 0,
+		lat: 15.4856582,
+		lng: 120.9743767,
 		selectable : false
 	},
 	{
@@ -427,6 +520,8 @@ const nodes = [
 		y: 38.68, 
 		type: "path",
 		floor: 0,
+		lat: 15.4856429,
+		lng: 120.9744051,
 		selectable : false
 	},
 	{
@@ -436,6 +531,8 @@ const nodes = [
 		y: 38.68, 
 		type: "path",
 		floor: 0,
+		lat: 15.4855845,
+		lng: 120.9744003,
 		selectable : false
 	},
 	{
@@ -445,6 +542,8 @@ const nodes = [
 		y: 38.68, 
 		type: "path",
 		floor: 0,
+		lat: 15.4855628,
+		lng: 120.9744061,
 		selectable : false
 	},
 	{
@@ -454,6 +553,8 @@ const nodes = [
 		y: 38.68, 
 		type: "path",
 		floor: 0,
+		lat: 15.4854155,
+		lng: 120.9744579,
 		selectable : false
 	},
 	{
@@ -463,6 +564,8 @@ const nodes = [
 		y: 44.04, 
 		type: "path",
 		floor: 0,
+		lat: 15.4853541,
+		lng: 120.9744333,
 		selectable : false
 	},
 	{
@@ -472,6 +575,8 @@ const nodes = [
 		y: 50.99, 
 		type: "path",
 		floor: 0,
+		lat: 15.4853541,
+		lng: 120.9742836,
 		selectable : false
 	},
 	{
@@ -481,6 +586,8 @@ const nodes = [
 		y: 50.99, 
 		type: "path",
 		floor: 0,
+		lat: 15.4854297,
+		lng: 120.9742836,
 		selectable : false
 	},
 	{
@@ -490,6 +597,8 @@ const nodes = [
 		y: 50.99, 
 		type: "path",
 		floor: 0,
+		lat: 15.485315,
+		lng: 120.9741495,
 		selectable : false
 	},
 	{
@@ -499,6 +608,8 @@ const nodes = [
 		y: 50.99, 
 		type: "path",
 		floor: 0,
+		"lat": 15.4855648,
+		"lng": 120.9741956,
 		selectable : false
 	},
 	{
@@ -508,6 +619,8 @@ const nodes = [
 		y: 62.14, 
 		type: "path",
 		floor: 0,
+		lat: 15.4853402,
+		lng: 120.9741109,
 		selectable : false
 	},
 	{
@@ -517,6 +630,8 @@ const nodes = [
 		y: 62.14, 
 		type: "path",
 		floor: 0,
+		lat: 15.4852805,
+		lng: 120.9741546,
 		selectable : false
 	},
 	{
@@ -526,6 +641,8 @@ const nodes = [
 		y: 62.14, 
 		type: "path",
 		floor: 0,
+		lat: 15.4852804,
+		lng: 120.9741468,
 		selectable : false
 	},
 	{
@@ -535,6 +652,8 @@ const nodes = [
 		y: 62.14, 
 		type: "path",
 		floor: 0,
+		lat: 15.4852873,
+		lng: 120.9741677,
 		selectable : false
 	},
 	{
@@ -544,6 +663,8 @@ const nodes = [
 		y: 62.14, 
 		type: "path",
 		floor: 0,
+		lat: 15.4851338,
+		lng: 120.9743783,
 		selectable : false
 	},
 	{
@@ -553,6 +674,8 @@ const nodes = [
 		y: 26.8, 
 		type: "path",
 		floor: 0,
+		lat: 15.4856582,
+		lng: 120.9745208,
 		selectable : false
 	},
 	{
@@ -562,6 +685,8 @@ const nodes = [
 		y: 69.6, 
 		type: "path",
 		floor: 0,
+		lat: 15.4853069,
+		lng: 120.974031,
 		selectable : false
 	},
 	{
@@ -571,6 +696,8 @@ const nodes = [
 		y: 76.26, 
 		type: "path",
 		floor: 0,
+		lat: 15.4855663,
+		lng: 120.9740565,
 		selectable : false
 	},
 	{
@@ -580,6 +707,8 @@ const nodes = [
 		y: 76.26, 
 		type: "path",
 		floor: 0,
+		lat: 15.4853245,
+		lng: 120.9739632,
 		selectable : false
 	},
 	{
@@ -589,6 +718,8 @@ const nodes = [
 		y: 26.8, 
 		type: "path",
 		floor: 0,
+		lat: 15.4854155,
+		lng: 120.9745208,
 		selectable : false
 	},
 	{
@@ -598,6 +729,8 @@ const nodes = [
 		y: 26.8, 
 		type: "path",
 		floor: 0,
+		lat: 15.4852796,
+		lng: 120.9745208,
 		selectable : false
 	},
 	{
@@ -607,6 +740,8 @@ const nodes = [
 		y: 26.8, 
 		type: "path",
 		floor: 0,
+		lat: 15.4852279,
+		lng: 120.9745208,
 		selectable : false
 	},
 	{
@@ -616,6 +751,8 @@ const nodes = [
 		y: 26.8, 
 		type: "path",
 		floor: 0,
+		lat: 15.4853225,
+		lng: 120.9745208,
 		selectable : false
 	},
 	{
@@ -625,6 +762,8 @@ const nodes = [
 		y: 26.8, 
 		type: "path",
 		floor: 0,
+		lat: 15.4853315,
+		lng: 120.9745191,
 		selectable : false
 	},
 	{
@@ -634,6 +773,8 @@ const nodes = [
 		y: 33.46, 
 		type: "path",
 		floor: 0,
+		lat: 15.4853014,
+		lng: 120.9744711,
 		selectable : false
 	},
 	{
@@ -643,6 +784,8 @@ const nodes = [
 		y: 33.46, 
 		type: "path",
 		floor: 0,
+		lat: 15.4852652,
+		lng: 120.9745006,
 		selectable : false
 	},
 	{
@@ -652,6 +795,8 @@ const nodes = [
 		y: 33.46, 
 		type: "path",
 		floor: 0,
+		lat: 15.4852325,
+		lng: 120.9745749,
 		selectable : false
 	},
 	{
@@ -661,6 +806,8 @@ const nodes = [
 		y: 33.46, 
 		type: "path",
 		floor: 0,
+		lat: 15.4851766,
+		lng: 120.9746517,
 		selectable : false
 	},
 	{
@@ -670,6 +817,8 @@ const nodes = [
 		y: 42.43, 
 		type: "path",
 		floor: 0,
+		lat: 15.4851186,
+		lng: 120.9745873,
 		selectable : false
 	},
 	{
@@ -679,6 +828,8 @@ const nodes = [
 		y: 42.43, 
 		type: "path",
 		floor: 0,
+		lat: 15.4851078,
+		lng: 120.974593,
 		selectable : false
 	},
 	{
@@ -688,6 +839,8 @@ const nodes = [
 		y: 38.51, 
 		type: "path",
 		floor: 0,
+		lat: 15.4852909,
+		lng: 120.9744674,
 		selectable : false
 	},
 	{
@@ -697,6 +850,8 @@ const nodes = [
 		y: 38.51, 
 		type: "path",
 		floor: 0,
+		lat: 15.4853066,
+		lng: 120.9744567,
 		selectable : false
 	},
 	{
@@ -706,6 +861,8 @@ const nodes = [
 		y: 38.51, 
 		type: "path",
 		floor: 0,
+		lat: 15.4852279,
+		lng: 120.9744567,
 		selectable : false
 	},
 	{
@@ -715,6 +872,8 @@ const nodes = [
 		y: 44.04, 
 		type: "path",
 		floor: 0,
+		lat: 15.4852279,
+		lng: 120.9744463,
 		selectable : false
 	},
 	{
@@ -724,6 +883,8 @@ const nodes = [
 		y: 62.36, 
 		type: "path",
 		floor: 0,
+		lat: 15.4852134,
+		lng: 120.9744113,
 		selectable : false
 	},
 	{
@@ -733,6 +894,8 @@ const nodes = [
 		y: 57.95, 
 		type: "path",
 		floor: 0,
+		lat: 15.4852075,
+		lng: 120.9743847,
 		selectable : false
 	}
 ];

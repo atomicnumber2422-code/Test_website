@@ -147,10 +147,14 @@ function convertLatLngToMapXY(lat, lng) {
 // DOM CONTENT LOADED
 // -------------------------
 document.addEventListener("DOMContentLoaded", () => {
-    nodes.filter(n => n.selectable).forEach(node => {
-        startSelect.add(new Option(node.name, node.id));
-        endSelect.add(new Option(node.name, node.id));
-    });
+    const selectableNodes = nodes
+	.filter(n => n.selectable)
+	.sort((a, b) => a.name.localeCompare(b.name));
+	
+	selectableNodes.forEach(node => {
+	startSelect.add(new Option(node.name, node.id));
+	endSelect.add(new Option(node.name, node.id));
+	});
 
     function preventSameSelection() {
         if (startSelect.value && startSelect.value === endSelect.value) {

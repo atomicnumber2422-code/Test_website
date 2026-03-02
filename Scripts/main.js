@@ -117,10 +117,36 @@ function getTouchCenter(touches) {
 }
 
 // -------------------------
+// MAP CALIBRATION (5 points for irregular map)
+// -------------------------
+const calibrationPoints = [
+    { lat: 15.485739301781981, lng: 120.97380717428112, x: 20.48, y: 86.24 }, //Gate Corner 1
+    { lat: 15.486152587354715, lng: 120.97426045383736, x: 11.87, y: 20.14 }, //CR Corner 2
+    { lat: 15.485130675510511, lng: 120.97458279015557, x: 92.44, y: 4.34 }, //DPWH Corner 3
+    { lat: 15.485332664996667, lng: 120.9745343659121, x: 92.25, y: 47.64 }, //Boys CR Corner 4
+    { lat: 15.485392524404139, lng: 120.97400515727534, x: 72.53, y: 86.16 } //SB Corner 5
+];
+
+function convertLatLngToMapXY(lat, lng) {
+    // Simple bilinear approximation using the 4 corners
+    const top = mapCalibration[0];
+    const topRight = mapCalibration[1];
+    const bottomLeft = mapCalibration[2];
+    const bottomRight = mapCalibration[3];
+
+    const xRatio = (lng - top.lng) / (topRight.lng - top.lng);
+    const yRatio = (lat - top.lat) / (bottomLeft.lat - top.lat); // latitude decreases south
+
+    const x = xRatio * 100;
+    const y = yRatio * 100;
+
+    return { x, y };
+}
+
+// -------------------------
 // DOM CONTENT LOADED
 // -------------------------
 document.addEventListener("DOMContentLoaded", () => {
-    // Populate start/end selects (only selectable nodes)
     nodes.filter(n => n.selectable).forEach(node => {
         startSelect.add(new Option(node.name, node.id));
         endSelect.add(new Option(node.name, node.id));
@@ -135,7 +161,6 @@ document.addEventListener("DOMContentLoaded", () => {
     startSelect.addEventListener("change", preventSameSelection);
     endSelect.addEventListener("change", preventSameSelection);
 
-    // Route button
     if (routeBtn) {
         routeBtn.addEventListener("click", () => {
             const startId = startSelect.value;
@@ -193,12 +218,25 @@ function drawPin(node, type) {
 }
 
 // -------------------------
-// LIVE GPS INTEGRATION
+// LIVE GPS INTEGRATION WITH CAMPUS BOUNDS
 // -------------------------
 let liveGPS = false;
 let watchID = null;
 let userMarker = null;
 let lastNode = null;
+
+// Define campus bounds from calibration
+const campusBounds = {
+    latMin: Math.min(...mapCalibration.map(p => p.lat)),
+    latMax: Math.max(...mapCalibration.map(p => p.lat)),
+    lngMin: Math.min(...mapCalibration.map(p => p.lng)),
+    lngMax: Math.max(...mapCalibration.map(p => p.lng))
+};
+
+function isInsideCampus(lat, lng) {
+    return lat >= campusBounds.latMin && lat <= campusBounds.latMax &&
+           lng >= campusBounds.lngMin && lng <= campusBounds.lngMax;
+}
 
 function startLiveGPS() {
     if (!navigator.geolocation) return alert("Geolocation not supported");
@@ -220,22 +258,19 @@ function startLiveGPS() {
     watchID = navigator.geolocation.watchPosition(pos => {
         const { latitude, longitude } = pos.coords;
 
-        // Snap to nearest node
-        let nearest = nodes[0];
-        let minDist = Infinity;
-        nodes.forEach(n => {
-            if (!n.selectable) return;
-            const d = Math.hypot(latitude - n.lat || 0, longitude - n.lng || 0);
-            if (d < minDist) {
-                minDist = d;
-                nearest = n;
-            }
-        });
+        // Only show blue dot if inside campus
+        if (!isInsideCampus(latitude, longitude)) {
+            userMarker.style.display = "none";
+            return;
+        }
+        userMarker.style.display = "block";
 
-        // Smooth transition
-        if (!lastNode) lastNode = { x: nearest.x, y: nearest.y };
-        const dx = nearest.x - lastNode.x;
-        const dy = nearest.y - lastNode.y;
+        // Convert lat/lng to map %
+        const { x, y } = convertLatLngToMapXY(latitude, longitude);
+
+        if (!lastNode) lastNode = { x, y };
+        const dx = x - lastNode.x;
+        const dy = y - lastNode.y;
         lastNode.x += dx * 0.2; // smooth factor
         lastNode.y += dy * 0.2;
 
@@ -247,10 +282,11 @@ function startLiveGPS() {
 function stopLiveGPS() {
     if (watchID !== null) navigator.geolocation.clearWatch(watchID);
     liveGPS = false;
+    if (userMarker) userMarker.style.display = "none";
 }
 
 // -------------------------
-// OPTIONAL BUTTON FOR GPS TOGGLE
+// GPS TOGGLE BUTTON
 // -------------------------
 const gpsBtn = document.getElementById("gps-btn");
 if (gpsBtn) {

@@ -220,8 +220,8 @@ const nodes = [
 			selectable: true
 	},
 	{
-			id:"Quisimbing",
-			name:"10-Quisimbing",
+			id:"Quisumbing",
+			name:"10-Quisumbing",
 			map:"PEREZ_FINALBLDG_2.png",
 			x: 57.29,
 			y: 34.03,

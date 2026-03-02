@@ -91,7 +91,7 @@ const edges = {
 	Zara : [
 		{ to: "path2_3", weight: 2 }
 	],
-	Quisimbing : [
+	Quisumbing : [
 		{ to: "path2_4", weight: 2 }
 	],
 	Alcala : [

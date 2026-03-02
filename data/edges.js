@@ -62,11 +62,11 @@ const edges = {
 	path1_9: [
 		{ to: "path1_16", weight: 4 },
 		{ to: "path1_8", weight: 3 },
-		{ to: "path1_10", weight: 4 }
+		{ to: "path1_22", weight: 2 }
 	],
 	path1_10: [
 		{ to: "path1_11", weight: 2 },
-		{ to: "path1_9", weight: 4 }
+		{ to: "path1_22", weight: 2 }
 	],
 	path1_11: [
 		{ to: "path1_12", weight: 2 },
@@ -76,7 +76,7 @@ const edges = {
 		{ to: "path1_4", weight: 5 },
 		{ to: "path1_11", weight: 2 },
 		{ to: "path1_13", weight: 6 },
-		{ to: "Gym", weight: 9 }
+		{ to: "path1_21", weight: 5 }
 	],
 	path1_13: [
 		{ to: "path1_12", weight: 6 },
@@ -108,12 +108,24 @@ const edges = {
 	],
 	path1_19: [
 		{ to: "Canteen", weight: 3 },
-		{ to: "path2_1", weight: 6 }
+		{ to: "path2_1", weight: 6 },
+		{ to: "path1_21", wieght: 5 }
 	],
 	path1_20: [
 		{ to: "SB", weight: 8 },
 		{ to: "path1_13", weight: 2 }
 	],
+	path1_21: [
+		{ to: "path1_12", weight: 4 },
+		{ to: "path1_19", weight: 5 },
+		{ to: "Gym", weight: 5 }
+	],
+	path1_22: [
+		{ to: "path1_9", weight: 3 },
+		{ to: "path1_19", weight: 6 },
+		{ to: "path1_10", weight: 2 }
+	],
+	
 
 //second section
 
@@ -141,7 +153,7 @@ const edges = {
 	Gym: [
 		{ to: "path2_10", weight: 4 },
 		{ to: "path2_2", weight: 5 },
-		{ to: "path1_12", weight: 9 }
+		{ to: "path1_21", weight: 5 }
 	],
 	path2_1: [
 		{ to: "path2_16", weight: 5 },

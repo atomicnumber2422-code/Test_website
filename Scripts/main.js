@@ -1,26 +1,84 @@
-// -------------------------
+// ===============================
 // MAP & ELEMENTS
-// -------------------------
+// ===============================
 const MAP_FOLDER = "maps/";
 const SVG_VIEWBOX = "0 0 100 100";
+
 const startSelect = document.getElementById("start");
 const endSelect = document.getElementById("end");
 const routeBtn = document.getElementById("route-btn");
+const replayBtn = document.getElementById("replay-btn");
+const gpsBtn = document.getElementById("gps-btn");
+
 const mapContainer = document.getElementById("map-container");
 const mapInner = document.getElementById("map-inner");
 const mapImage = document.getElementById("map-image");
 const svg = document.getElementById("route-layer");
-const replayBtn = document.getElementById("replay-btn");
 
-// -------------------------
-// REPLAY BUTTON
-// -------------------------
+svg.setAttribute("viewBox", SVG_VIEWBOX);
+svg.setAttribute("preserveAspectRatio", "none");
+
+// ===============================
+// POPULATE DROPDOWNS WITH SORTING
+// ===============================
+function populateDropdowns() {
+
+    if (!Array.isArray(nodes)) {
+        console.error("nodes not loaded");
+        return;
+    }
+
+    // Sort nodes alphabetically by name
+    const selectableNodes = nodes
+        .filter(n => n.selectable)
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+    selectableNodes.forEach(node => {
+        const startOption = document.createElement("option");
+        startOption.value = node.id;
+        startOption.textContent = node.name;
+        startSelect.appendChild(startOption);
+
+        const endOption = document.createElement("option");
+        endOption.value = node.id;
+        endOption.textContent = node.name;
+        endSelect.appendChild(endOption);
+    });
+
+    // Prevent selecting the same node for start and end
+    startSelect.addEventListener("change", () => {
+        const startValue = startSelect.value;
+        Array.from(endSelect.options).forEach(option => {
+            option.disabled = option.value === startValue;
+        });
+        // If current end is same as start, reset end
+        if (endSelect.value === startValue) endSelect.value = "";
+    });
+
+    endSelect.addEventListener("change", () => {
+        const endValue = endSelect.value;
+        Array.from(startSelect.options).forEach(option => {
+            option.disabled = option.value === endValue;
+        });
+        // If current start is same as end, reset start
+        if (startSelect.value === endValue) startSelect.value = "";
+    });
+}
+
+document.addEventListener("DOMContentLoaded", populateDropdowns);
+
+
+// ===============================
+// REPLAY
+// ===============================
 let lastPath = null;
+
 replayBtn.addEventListener("click", () => {
     if (!lastPath) return;
     clearRoute();
     renderRouteMultiFloor(lastPath);
 });
+
 
 // -------------------------
 // IMAGE DRAG PREVENTION
@@ -115,90 +173,31 @@ function getTouchDistance(touches) {
 function getTouchCenter(touches) {
     return { x: (touches[0].clientX + touches[1].clientX)/2, y: (touches[0].clientY + touches[1].clientY)/2 };
 }
-
-// -------------------------
-// MAP CALIBRATION (5 points for irregular map)
-// -------------------------
-const calibrationPoints = [
-    { lat: 15.485739301781981, lng: 120.97380717428112, x: 20.48, y: 86.24 }, //Gate Corner 1
-    { lat: 15.486152587354715, lng: 120.97426045383736, x: 11.87, y: 20.14 }, //CR Corner 2
-    { lat: 15.485130675510511, lng: 120.97458279015557, x: 92.44, y: 4.34 }, //DPWH Corner 3
-    { lat: 15.485332664996667, lng: 120.9745343659121, x: 92.25, y: 47.64 }, //Boys CR Corner 4
-    { lat: 15.485392524404139, lng: 120.97400515727534, x: 72.53, y: 86.16 } //SB Corner 5
-];
-
-function convertLatLngToMapXY(lat, lng) {
-    // Simple bilinear approximation using the 4 corners
-    const top = mapCalibration[0];
-    const topRight = mapCalibration[1];
-    const bottomLeft = mapCalibration[2];
-    const bottomRight = mapCalibration[3];
-
-    const xRatio = (lng - top.lng) / (topRight.lng - top.lng);
-    const yRatio = (lat - top.lat) / (bottomLeft.lat - top.lat); // latitude decreases south
-
-    const x = xRatio * 100;
-    const y = yRatio * 100;
-
-    return { x, y };
-}
-
-// -------------------------
-// DOM CONTENT LOADED
-// -------------------------
-document.addEventListener("DOMContentLoaded", () => {
-    const selectableNodes = nodes
-	.filter(n => n.selectable)
-	.sort((a, b) => a.name.localeCompare(b.name));
-	
-	selectableNodes.forEach(node => {
-	startSelect.add(new Option(node.name, node.id));
-	endSelect.add(new Option(node.name, node.id));
-	});
-
-    function preventSameSelection() {
-        if (startSelect.value && startSelect.value === endSelect.value) {
-            alert("Starting point and destination must be different.");
-            this.selectedIndex = 0;
-        }
-    }
-    startSelect.addEventListener("change", preventSameSelection);
-    endSelect.addEventListener("change", preventSameSelection);
-
-    if (routeBtn) {
-        routeBtn.addEventListener("click", () => {
-            const startId = startSelect.value;
-            const endId = endSelect.value;
-            if (!startId || !endId) {
-                alert("Please select both start and destination.");
-                return;
-            }
-            calculateRoute();
-        });
-    }
-});
-
-// -------------------------
-// SVG
-// -------------------------
-svg.setAttribute("viewBox", SVG_VIEWBOX);
-svg.setAttribute("preserveAspectRatio", "none");
-
+// ===============================
+// UTILITIES
+// ===============================
 function getNode(id) {
     return nodes.find(n => n.id === id);
 }
+
 function clearRoute() {
     svg.innerHTML = "";
 }
+
 function bringPinsToFront() {
-    svg.querySelectorAll(".pin").forEach(pin => svg.appendChild(pin));
+    svg.querySelectorAll(".pin")
+        .forEach(pin => svg.appendChild(pin));
 }
 
-// -------------------------
+// ===============================
 // PIN DRAWING
-// -------------------------
+// ===============================
 function drawPin(node, type) {
-    const color = type === "start" ? "#00cc00" : type === "user" ? "#007bff" : "#cc0000";
+    const color =
+        type === "start" ? "#00cc00" :
+        type === "user" ? "#1a73e8" :
+        "#cc0000";
+
     const PIN_SIZE = 1.3;
 
     const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
@@ -209,9 +208,9 @@ function drawPin(node, type) {
     circle.classList.add("pin", type);
 
     const triangle = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-    triangle.setAttribute("points", 
-        `${node.x - PIN_SIZE*0.8},${node.y - PIN_SIZE*0.2} `+
-        `${node.x + PIN_SIZE*0.8},${node.y - PIN_SIZE*0.2} `+
+    triangle.setAttribute("points",
+        `${node.x - PIN_SIZE*0.8},${node.y - PIN_SIZE*0.2} ` +
+        `${node.x + PIN_SIZE*0.8},${node.y - PIN_SIZE*0.2} ` +
         `${node.x},${node.y + PIN_SIZE*1.2}`
     );
     triangle.setAttribute("fill", color);
@@ -221,111 +220,44 @@ function drawPin(node, type) {
     svg.appendChild(triangle);
 }
 
-// -------------------------
-// LIVE GPS INTEGRATION WITH CAMPUS BOUNDS
-// -------------------------
-let liveGPS = false;
-let watchID = null;
-let userMarker = null;
-let lastNode = null;
-
-// Define campus bounds from calibration
-const campusBounds = {
-    latMin: Math.min(...mapCalibration.map(p => p.lat)),
-    latMax: Math.max(...mapCalibration.map(p => p.lat)),
-    lngMin: Math.min(...mapCalibration.map(p => p.lng)),
-    lngMax: Math.max(...mapCalibration.map(p => p.lng))
-};
-
-function isInsideCampus(lat, lng) {
-    return lat >= campusBounds.latMin && lat <= campusBounds.latMax &&
-           lng >= campusBounds.lngMin && lng <= campusBounds.lngMax;
-}
-
-function startLiveGPS() {
-    if (!navigator.geolocation) return alert("Geolocation not supported");
-    liveGPS = true;
-
-    if (!userMarker) {
-        userMarker = document.createElement("div");
-        userMarker.className = "user-marker";
-        userMarker.style.position = "absolute";
-        userMarker.style.width = "16px";
-        userMarker.style.height = "16px";
-        userMarker.style.background = "#007bff";
-        userMarker.style.borderRadius = "50%";
-        userMarker.style.transform = "translate(-50%, -50%)";
-        userMarker.style.zIndex = 30;
-        mapInner.parentElement.appendChild(userMarker);
-    }
-
-    watchID = navigator.geolocation.watchPosition(pos => {
-        const { latitude, longitude } = pos.coords;
-
-        // Only show blue dot if inside campus
-        if (!isInsideCampus(latitude, longitude)) {
-            userMarker.style.display = "none";
-            return;
-        }
-        userMarker.style.display = "block";
-
-        // Convert lat/lng to map %
-        const { x, y } = convertLatLngToMapXY(latitude, longitude);
-
-        if (!lastNode) lastNode = { x, y };
-        const dx = x - lastNode.x;
-        const dy = y - lastNode.y;
-        lastNode.x += dx * 0.2; // smooth factor
-        lastNode.y += dy * 0.2;
-
-        userMarker.style.left = `${lastNode.x}%`;
-        userMarker.style.top = `${lastNode.y}%`;
-    }, err => console.error(err), { enableHighAccuracy: true, maximumAge: 1000, timeout: 5000 });
-}
-
-function stopLiveGPS() {
-    if (watchID !== null) navigator.geolocation.clearWatch(watchID);
-    liveGPS = false;
-    if (userMarker) userMarker.style.display = "none";
-}
-
-// -------------------------
-// GPS TOGGLE BUTTON
-// -------------------------
-const gpsBtn = document.getElementById("gps-btn");
-if (gpsBtn) {
-    gpsBtn.addEventListener("click", () => {
-        if (!liveGPS) startLiveGPS();
-        else stopLiveGPS();
-    });
-}
-
-// -------------------------
-// ROUTE CALCULATION / MULTIFLOOR
-// -------------------------
+// ===============================
+// ROUTE CALCULATION
+// ===============================
 function calculateRoute() {
     const startId = startSelect.value;
     const endId = endSelect.value;
+
     clearRoute();
+
     const path = dijkstra(startId, endId);
+
     if (!path || path.length < 2) {
         alert("No route found.");
         return;
     }
+
     lastPath = path;
     replayBtn.style.display = "inline-block";
+
     renderRouteMultiFloor(path);
 }
 
+// ===============================
+// MULTI-FLOOR RENDERING
+// ===============================
 function renderRouteMultiFloor(path) {
-    let index = 0, t = 0;
+    let index = 0;
+    let t = 0;
     const speed = 0.05;
-    let startNode = getNode(path[0]);
+
+    const startNode = getNode(path[0]);
     let currentFloor = startNode.floor;
+
     mapImage.src = MAP_FOLDER + startNode.map;
     drawPin(startNode, "start");
 
     function nextSegment() {
+
         if (index >= path.length - 1) {
             drawPin(getNode(path[path.length - 1]), "end");
             return;
@@ -337,8 +269,7 @@ function renderRouteMultiFloor(path) {
         if (a.floor !== currentFloor) {
             currentFloor = a.floor;
             mapImage.src = MAP_FOLDER + a.map;
-            svg.querySelectorAll("line").forEach(l => l.remove());
-            svg.querySelectorAll(".pin").forEach(p => p.remove());
+            clearRoute();
         }
 
         const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
@@ -349,18 +280,175 @@ function renderRouteMultiFloor(path) {
         line.setAttribute("stroke", "#000");
         line.setAttribute("stroke-width", 0.8);
         line.setAttribute("stroke-linecap", "round");
+
         svg.appendChild(line);
 
         t = 0;
+
         function animate() {
             t += speed;
             if (t > 1) t = 1;
-            line.setAttribute("x2", a.x + (b.x - a.x)*t);
-            line.setAttribute("y2", a.y + (b.y - a.y)*t);
-            if (t < 1) requestAnimationFrame(animate);
-            else { bringPinsToFront(); index++; nextSegment(); }
+
+            line.setAttribute("x2", a.x + (b.x - a.x) * t);
+            line.setAttribute("y2", a.y + (b.y - a.y) * t);
+
+            if (t < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                bringPinsToFront();
+                index++;
+                nextSegment();
+            }
         }
+
         animate();
     }
+
     nextSegment();
+}
+
+// ===============================
+// GPS SYSTEM
+// ===============================
+
+// 5 calibration points (irregular)
+const calibrationPoints = [
+    { lat: 15.485739301781981, lng: 120.97380717428112, x: 20.48, y: 86.24 },
+    { lat: 15.486152587354715, lng: 120.97426045383736, x: 11.87, y: 20.14 },
+    { lat: 15.485130675510511, lng: 120.97458279015557, x: 92.44, y: 4.34 },
+    { lat: 15.485332664996667, lng: 120.9745343659121, x: 92.25, y: 47.64 },
+    { lat: 15.485392524404139, lng: 120.97400515727534, x: 72.53, y: 86.16 }
+];
+
+// True irregular warping (IDW)
+function convertLatLngToMapXY(lat, lng) {
+
+    let numeratorX = 0;
+    let numeratorY = 0;
+    let denominator = 0;
+
+    calibrationPoints.forEach(point => {
+        const d = Math.hypot(lat - point.lat, lng - point.lng);
+        const weight = d === 0 ? 1e9 : 1 / (d * d);
+
+        numeratorX += weight * point.x;
+        numeratorY += weight * point.y;
+        denominator += weight;
+    });
+
+    let x = numeratorX / denominator;
+    let y = numeratorY / denominator;
+
+    x = Math.max(0, Math.min(100, x));
+    y = Math.max(0, Math.min(100, y));
+
+    return { x, y };
+}
+
+// Campus bounds
+const campusBounds = {
+    latMin: Math.min(...calibrationPoints.map(p => p.lat)),
+    latMax: Math.max(...calibrationPoints.map(p => p.lat)),
+    lngMin: Math.min(...calibrationPoints.map(p => p.lng)),
+    lngMax: Math.max(...calibrationPoints.map(p => p.lng))
+};
+
+function isInsideCampus(lat, lng) {
+    return lat >= campusBounds.latMin &&
+           lat <= campusBounds.latMax &&
+           lng >= campusBounds.lngMin &&
+           lng <= campusBounds.lngMax;
+}
+
+// ===============================
+// LIVE GPS
+// ===============================
+let liveGPS = false;
+let watchID = null;
+let userMarker = null;
+let lastNode = null;
+
+function findNearestNode(x, y) {
+    let closest = null;
+    let minDistance = Infinity;
+
+    nodes.forEach(node => {
+        if (!node.selectable) return;
+        const dist = Math.hypot(node.x - x, node.y - y);
+        if (dist < minDistance) {
+            minDistance = dist;
+            closest = node;
+        }
+    });
+
+    return closest;
+}
+
+function startLiveGPS() {
+
+    if (!navigator.geolocation)
+        return alert("Geolocation not supported");
+
+    liveGPS = true;
+
+    if (!userMarker) {
+        userMarker = document.createElement("div");
+        userMarker.className = "user-marker";
+        userMarker.style.position = "absolute";
+        userMarker.style.width = "18px";
+        userMarker.style.height = "18px";
+        userMarker.style.borderRadius = "50%";
+        userMarker.style.background = "#1a73e8";
+        userMarker.style.border = "3px solid white";
+        userMarker.style.boxShadow = "0 0 12px rgba(26,115,232,0.6)";
+        userMarker.style.transform = "translate(-50%, -50%)";
+        userMarker.style.zIndex = 40;
+        mapInner.appendChild(userMarker);
+    }
+
+    watchID = navigator.geolocation.watchPosition(pos => {
+
+        const { latitude, longitude } = pos.coords;
+
+        if (!isInsideCampus(latitude, longitude)) {
+            userMarker.style.display = "none";
+            return;
+        }
+
+        userMarker.style.display = "block";
+
+        const { x, y } = convertLatLngToMapXY(latitude, longitude);
+
+        if (!lastNode) lastNode = { x, y };
+
+        lastNode.x += (x - lastNode.x) * 0.2;
+        lastNode.y += (y - lastNode.y) * 0.2;
+
+        userMarker.style.left = `${lastNode.x}%`;
+        userMarker.style.top = `${lastNode.y}%`;
+
+        // Auto-set start to nearest node
+        const nearest = findNearestNode(lastNode.x, lastNode.y);
+        if (nearest && startSelect.value !== nearest.id) {
+            startSelect.value = nearest.id;
+        }
+
+    }, err => console.error(err),
+    { enableHighAccuracy: true, maximumAge: 1000, timeout: 5000 });
+}
+
+function stopLiveGPS() {
+    if (watchID !== null)
+        navigator.geolocation.clearWatch(watchID);
+    liveGPS = false;
+    if (userMarker)
+        userMarker.style.display = "none";
+}
+
+// GPS Button
+if (gpsBtn) {
+    gpsBtn.addEventListener("click", () => {
+        if (!liveGPS) startLiveGPS();
+        else stopLiveGPS();
+    });
 }

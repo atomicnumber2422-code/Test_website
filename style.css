@@ -249,6 +249,7 @@ body {
 	border-radius: 20px;
 	border: 1px solid #aaa;
 	outline: none;
+	text-align: center;
 	background: linear-gradient(to right, #800000, #FF8C00);
 	box-shadow: 0 2px 4px rgba(0,0,0,0.15);
 }
@@ -347,4 +348,5 @@ a {
     70% { box-shadow: 0 0 0 12px rgba(26,115,232,0); }
     100% { box-shadow: 0 0 0 0 rgba(26,115,232,0); }
 }
+
 

@@ -4,8 +4,8 @@ const nodes = [
 			id:"Lieber",
 			name:"8-Lieber",
 			map:"SB_FINALBLDG_1.png",
-			x: 23.73,
-			y: 71.28,
+			x: 23.56,
+			y: 68.54,
 			type:"room",
 			floor: 0,
 			selectable: true
@@ -14,8 +14,8 @@ const nodes = [
 			id:"CompLab",
 			name:"Computer Lab",
 			map:"SB_FINALBLDG_1.png",
-			x: 37.4,
-			y: 71.28,
+			x: 37.37,
+			y: 68.54,
 			type:"room",
 			floor: 0,
 			selectable: true
@@ -24,8 +24,8 @@ const nodes = [
 			id:"MT",
 			name:"Master Teacher's Office",
 			map:"SB_FINALBLDG_1.png",
-			x: 45.73,
-			y: 82.5,
+			x: 45.91,
+			y: 68.54,
 			type:"room",
 			floor: 0,
 			selectable: true
@@ -34,8 +34,8 @@ const nodes = [
 			id:"Bernoulli",
 			name:"12-Bernoulli",
 			map:"SB_FINALBLDG_1.png",
-			x: 58.73,
-			y: 71.28,
+			x: 59.1,
+			y: 68.54,
 			type:"room",
 			floor: 0,
 			selectable: true
@@ -44,8 +44,8 @@ const nodes = [
 			id:"Shannon",
 			name:"12-Shannon",
 			map:"SB_FINALBLDG_1.png",
-			x: 76.29,
-			y: 71.28,
+			x: 76.96,
+			y: 68.54,
 			type:"room",
 			floor: 0,
 			selectable: true
@@ -53,8 +53,8 @@ const nodes = [
 	{
 			id:"path1_1",
 			map:"SB_FINALBLDG_1.png",
-			x: 7.79,
-			y: 26.72,
+			x: 7.55,
+			y: 25.08,
 			type:"path",
 			floor: 0,
 			selectable: false
@@ -62,8 +62,8 @@ const nodes = [
 	{
 			id:"path1_2",
 			map:"SB_FINALBLDG_1.png",
-			x: 23.73,
-			y: 26.72,
+			x: 23.56,
+			y: 25.08,
 			type:"path",
 			floor: 0,
 			selectable: false
@@ -71,8 +71,8 @@ const nodes = [
 	{
 			id:"path1_3",
 			map:"SB_FINALBLDG_1.png",
-			x: 37.4,
-			y: 26.72,
+			x: 37.37,
+			y: 25.08,
 			type:"path",
 			floor: 0,
 			selectable: false
@@ -80,8 +80,8 @@ const nodes = [
 	{
 			id:"path1_4",
 			map:"SB_FINALBLDG_1.png",
-			x: 45.73,
-			y: 26.72,
+			x: 45.91,
+			y: 25.08,
 			type:"path",
 			floor: 0,
 			selectable: false
@@ -89,8 +89,8 @@ const nodes = [
 	{
 			id:"path1_5",
 			map:"SB_FINALBLDG_1.png",
-			x: 58.73,
-			y: 26.72,
+			x: 59.1,
+			y: 25.08,
 			type:"path",
 			floor: 0,
 			selectable: false
@@ -98,8 +98,8 @@ const nodes = [
 	{
 			id:"path1_6",
 			map:"SB_FINALBLDG_1.png",
-			x: 76.29,
-			y: 26.72,
+			x: 76.96,
+			y: 25.08,
 			type:"path",
 			floor: 0,
 			selectable: false
@@ -108,7 +108,7 @@ const nodes = [
 			id:"path1_7",
 			map:"SB_FINALBLDG_1.png",
 			x: 92.18,
-			y: 26.72,
+			y: 25.08,
 			type:"path",
 			floor: 0,
 			selectable: false
@@ -116,8 +116,8 @@ const nodes = [
 	{
 			id:"stair1_1",
 			map:"SB_FINALBLDG_1.png",
-			x: 7.79,
-			y: 76.56,
+			x: 7.55,
+			y: 77.59,
 			type:"stair",
 			floor: 0,
 			selectable: false
@@ -126,7 +126,7 @@ const nodes = [
 			id:"stair1_2",
 			map:"SB_FINALBLDG_1.png",
 			x: 92.18,
-			y: 76.56,
+			y: 77.59,
 			type:"stair",
 			floor: 0,
 			selectable: false
@@ -136,8 +136,8 @@ const nodes = [
 			id:"NewComp",
 			name:"New Computer Lab",
 			map:"SB_FINALBLDG_2.png",
-			x: 23.73,
-			y: 71.17,
+			x: 23.38,
+			y: 68.9,
 			type:"room",
 			floor: 1,
 			selectable: true
@@ -146,8 +146,8 @@ const nodes = [
 			id:"Stephenson",
 			name:"12-Stephenson",
 			map:"SB_FINALBLDG_2.png",
-			x: 40.62,
-			y: 71.17,
+			x: 41.24,
+			y: 68.9,
 			type:"room",
 			floor: 1,
 			selectable: true
@@ -156,8 +156,8 @@ const nodes = [
 			id:"Mayer",
 			name:"12-Von Mayer",
 			map:"SB_FINALBLDG_2.png",
-			x: 57.84,
-			y: 71.17,
+			x: 58.22,
+			y: 68.9,
 			type:"room",
 			floor: 1,
 			selectable: true
@@ -166,8 +166,8 @@ const nodes = [
 			id:"Pacioli",
 			name:"12-Pacioli",
 			map:"SB_FINALBLDG_2.png",
-			x: 75.51,
-			y: 71.17,
+			x: 75.73,
+			y: 68.9,
 			type:"room",
 			floor: 1,
 			selectable: true
@@ -175,8 +175,8 @@ const nodes = [
 	{
 			id:"path2_1",
 			map:"SB_FINALBLDG_2.png",
-			x: 7.29,
-			y: 27.49,
+			x: 6.84,
+			y: 23.12,
 			type:"path",
 			floor: 1,
 			selectable: false
@@ -184,8 +184,8 @@ const nodes = [
 	{
 			id:"path2_2",
 			map:"SB_FINALBLDG_2.png",
-			x: 23.73,
-			y: 27.49,
+			x: 23.38,
+			y: 23.12,
 			type:"path",
 			floor: 1,
 			selectable: false
@@ -193,8 +193,8 @@ const nodes = [
 	{
 			id:"path2_3",
 			map:"SB_FINALBLDG_2.png",
-			x: 40.62,
-			y: 27.49,
+			x: 41.24,
+			y: 23.12,
 			type:"path",
 			floor: 1,
 			selectable: false
@@ -202,8 +202,8 @@ const nodes = [
 	{
 			id:"path2_4",
 			map:"SB_FINALBLDG_2.png",
-			x: 57.84,
-			y: 27.49,
+			x: 58.22,
+			y: 23.12,
 			type:"path",
 			floor: 1,
 			selectable: false
@@ -211,8 +211,8 @@ const nodes = [
 	{
 			id:"path2_5",
 			map:"SB_FINALBLDG_2.png",
-			x: 75.51,
-			y: 27.49,
+			x: 75.73,
+			y: 23.12,
 			type:"path",
 			floor: 1,
 			selectable: false
@@ -220,8 +220,8 @@ const nodes = [
 	{
 			id:"path2_6",
 			map:"SB_FINALBLDG_2.png",
-			x: 92.29,
-			y: 27.49,
+			x: 92.27,
+			y: 23.12,
 			type:"path",
 			floor: 1,
 			selectable: false
@@ -229,8 +229,8 @@ const nodes = [
 	{
 			id:"stair2_2",
 			map:"SB_FINALBLDG_2.png",
-			x: 92.29,
-			y: 79.58,
+			x: 92.27,
+			y: 75.98,
 			type:"stair",
 			floor: 1,
 			selectable: false
@@ -238,8 +238,8 @@ const nodes = [
 	{
 			id:"stair2_1",
 			map:"SB_FINALBLDG_2.png",
-			x: 7.29,
-			y: 79.58,
+			x: 6.84,
+			y: 75.98,
 			type:"stair",
 			floor: 1,
 			selectable: false

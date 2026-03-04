@@ -128,7 +128,7 @@ const edges = {
 	path2_4 : [
 		{ to: "path2_3", weight: 3 },
 		{ to: "path2_5", weight: 3 },
-		{ to: "Quisimbing", weight: 2 }
+		{ to: "Quisumbing", weight: 2 }
 	],
 	path2_5 : [
 		{ to: "path2_4", weight: 3 },

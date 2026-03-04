@@ -354,6 +354,8 @@ const campusBounds = {
 };
 
 function isInsideCampus(lat, lng) {
+    const margin = 0.0003; // ~30m buffer
+    
     return lat >= campusBounds.latMin &&
            lat <= campusBounds.latMax &&
            lng >= campusBounds.lngMin &&
@@ -451,4 +453,5 @@ if (gpsBtn) {
         if (!liveGPS) startLiveGPS();
         else stopLiveGPS();
     });
+
 }

@@ -72,7 +72,7 @@ const nodes = [
 	},
 	{
 			id:"SSLG",
-			name:"SSLG",
+			name:"SSLG Office",
 			map:"PEREZ_FINALBLDG_1.png",
 			x: 89.63,
 			y: 37.87,
@@ -351,4 +351,5 @@ const nodes = [
 	}
 ]
 		
+
 			

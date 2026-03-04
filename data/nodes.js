@@ -200,8 +200,8 @@ const nodes = [
 		y: 46.26, 
 		type: "room",
 		floor: 0,
-		lat: 15.4851097,
-		lng: 120.9745799,
+		lat: 15.485702,
+		lng: 120.9739624,
 		selectable : true
 	},
 	{
@@ -918,3 +918,4 @@ const nodes = [
 	}
 
 ];
+
